@@ -28,4 +28,9 @@ If you want to decrypt the archive ( i.e. to restore the backuped data ) you can
     mkdir backup/
     tar -xvf backup.restored.tar backup/
 
-You now have all backuped files in the `backup/` folder!
+You now have all backuped files in the `backup/` folder.
+
+## Server-List
+All servers are being added in the `serverlist.template` file. In order to have a working authentication, you have to add the SSH-KEY of the storage server to the server from which you want to grab files. You can add new servers using the following sheme:
+
+        <SERVER_HOSTNAME OR IP>|<USERNAME FOR AUTHENTICATION>
