@@ -57,7 +57,7 @@ do
         tar cvf $BACKUPTIME-$SERVERNAME.tar -C $BACKUPTIME-$SERVERNAME/ .
 
         # Remove folder
-        rm -rf $BACKUPTIME-$SERVERNAME/
+        rm -rf "$BACKUPTIME-$SERVERNAME/"
 
         # Encrypt archive
         openssl aes-256-cbc -salt -in $BACKUPTIME-$SERVERNAME.tar -out $BACKUPTIME-$SERVERNAME.tar.aes -k $PASSWORD
