@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Backup Directory ( where to store the encrypted backups )
-BACKUPDIR=/data/backups/
+BACKUPDIR="/data/backups/"
 
 # Current Time ( needed for backup file naming )
 BACKUPTIME=$(date +"%Y-%m-%d_%H%M")
@@ -13,7 +13,32 @@ PASSWORD="PZEz5BaqhKG4s4Zm" # Replace with a self-generated password
 SERVERLIST=$(cat serverlist.template)
 
 # Backuped Data ( what data to backup )
-BACKUPDATA=/home/
+BACKUPDATA="/home/"
+
+# Decide whether we want to delete backups if Disk is full or just stop backuping
+FREEUPSPACE="yes"
+
+# Available Disk Space
+DISKSPACE=$(df --output=avail -h "$PWD" | sed '1d;s/[^0-9]//g')
+
+# MAX used space ( defines after which amount the script starts deleting old backups in case `FREEUPSPACE` is 'yes' )
+MAXUSED=10
+
+
+if [[ ( $FREEUPSPACE = "yes" ) -o ( $DISKSPACE -lt $MAXUSED ) ]]; then
+        echo "THERE ARE ONLY $DISKSPACE GB AVAILABLE ON THIS SYSTEM!"
+        if [ $FREEUPSPACE = "yes" ]; then
+                echo "FREEING UP SPACE NOW!"
+                for i in {1..5}
+                do
+                        OLDESTFILE=$(find $BACKUPDIR -type f -printf '%T+ %p\n' | sort | head -n 1 | cut -f2 -d ' ')
+                        cd $BACKUPDIR
+                        rm $OLDESTFILE
+                        echo "DELETING $i FILE."
+                done
+        fi
+        exit 1
+fi
 
 # Loop through all servers and do something
 for data in $SERVERLIST
