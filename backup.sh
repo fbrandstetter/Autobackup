@@ -1,31 +1,31 @@
 #!/bin/bash
 
 # Backup Directory ( where to store the encrypted backups )
-BACKUPDIR="/data/backups/"
+BACKUPDIR=""
 
 # Current Time ( needed for backup file naming )
 BACKUPTIME=$(date +"%Y-%m-%d_%H%M")
 
 # Password / Key for encryption
-PASSWORD="PZEz5BaqhKG4s4Zm" # Replace with a self-generated password
+PASSWORD=""
 
 # SERVERLIST
 SERVERLIST=$(cat serverlist.template)
 
 # Backuped Data ( what data to backup )
-BACKUPDATA="/home/"
+BACKUPDATA=""
 
-# Decide whether we want to delete backups if Disk is full or just stop backuping
-FREEUPSPACE="yes"
+# Decide whether we want to delete backups if Disk is full or just stop backuping ( yes or no )
+FREEUPSPACE=""
 
 # Available Disk Space
 DISKSPACE=$(df --output=avail -h "$PWD" | sed '1d;s/[^0-9]//g')
 
 # MAX used space ( defines after which amount the script starts deleting old backups in case `FREEUPSPACE` is 'yes' )
-MAXUSED=10
+MAXUSED="" # in GB
 
 
-if [[ ( $FREEUPSPACE = "yes" ) -o ( $DISKSPACE -lt $MAXUSED ) ]]; then
+if [[ ( $FREEUPSPACE = "yes" ) && ( $DISKSPACE -lt $MAXUSED ) ]]; then
         echo "THERE ARE ONLY $DISKSPACE GB AVAILABLE ON THIS SYSTEM!"
         if [ $FREEUPSPACE = "yes" ]; then
                 echo "FREEING UP SPACE NOW!"
