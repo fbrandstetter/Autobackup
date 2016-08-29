@@ -31,7 +31,7 @@ if [[ ( ${FREEUPSPACE} = "yes" ) && ( ${DISKSPACE} -lt ${MAXUSED} ) ]]; then
                 echo "FREEING UP SPACE NOW!"
                 for i in {1..5}
                 do
-                        OLDESTFILE=$(find $BACKUPDIR -type f -printf '%T+ %p\n' | sort | head -n 1 | cut -f2 -d ' ')
+                        OLDESTFILE=$(find ${BACKUPDIR} -type f -printf '%T+ %p\n' | sort | head -n 1 | cut -f2 -d ' ')
                         cd ${BACKUPDIR}
                         rm ${OLDESTFILE}
                         echo "DELETING $i FILE."
