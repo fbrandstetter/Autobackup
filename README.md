@@ -35,4 +35,12 @@ You now have all backuped files in the `backup/` folder.
 ## Server-List
 All servers are being added in the `serverlist.template` file. In order to have a working authentication, you have to add the SSH-KEY of the storage server to the server from which you want to grab files. You can add new servers using the following sheme:
 
-    <SERVER_HOSTNAME OR IP>|<USERNAME FOR AUTHENTICATION>
+    <SERVER_HOSTNAME OR IP>|<USERNAME FOR AUTHENTICATION>|<EXCLUDE LIST>
+
+# Exclude
+Each server has it's own exclude list which directories we don't want to backup. Actually, by default we backup the entire system ( `/` ). An example for an exclude list looks like this:
+
+    DIRECTORY/
+    FILE.txt
+    DIRECTORY/
+    FILE.dat
