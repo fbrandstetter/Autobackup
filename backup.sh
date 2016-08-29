@@ -49,12 +49,13 @@ do
         # Set variables
         SERVERNAME=$( echo $data | cut -f1 -d '|' )
         USERNAME=$( echo $data | cut -f2 -d '|' )
+        EXCLUDES=$( echo $data | cut -f3 -d '|' )
 
         # Create directory for the backup
         mkdir "${BACKUPTIME}-${SERVERNAME}"
 
         # Grab files from remote server
-        echo "get -r ${BACKUPDATA} ${BACKUPTIME}-${SERVERNAME}/" | sftp "${USERNAME}"@"${SERVERNAME}"
+        rsync -r --exclude-from 'default-exclude.template' -- exclude-from "$EXCLUDES" -v -e ssh ${USERNAME}@${SERVERNAME}:/ ${BACKUPTIME}-${SERVERNAME}/
 
         # Create archive
         tar cvf "${BACKUPTIME}-${SERVERNAME}.tar" -C "${BACKUPTIME}-${SERVERNAME}/" .
