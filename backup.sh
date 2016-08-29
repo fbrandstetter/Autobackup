@@ -12,20 +12,17 @@ PASSWORD=""
 # SERVERLIST
 SERVERLIST=$(cat serverlist.template)
 
-# Backuped Data ( what data to backup )
-BACKUPDATA=""
-
 # Decide whether we want to delete backups if Disk is full or just stop backuping ( yes or no )
 FREEUPSPACE=""
 
 # Available Disk Space
-DISKSPACE=$(df --output=avail -h "$PWD" | sed '1d;s/[^0-9]//g')
+DISKSPACE=$(df --output=avail -h "$PWD" | sed '1d;s/[^0-9]//g' | tr --delete "\n")
 
 # MAX used space ( defines after which amount the script starts deleting old backups in case `FREEUPSPACE` is 'yes' )
 MAXUSED="" # in GB
 
 
-if [ ${DISKSPACE} -lt ${MAXUSED} ]; then
+if [ "$MAXUSED" -gt "$DISKSPACE" ]; then
         echo "THERE ARE ONLY $DISKSPACE GB AVAILABLE ON THIS SYSTEM!"
         if [ ${FREEUPSPACE} = "yes" ]; then
                 echo "FREEING UP SPACE NOW!"
@@ -55,7 +52,7 @@ do
         mkdir "${BACKUPTIME}-${SERVERNAME}"
 
         # Grab files from remote server
-        rsync -r --exclude-from 'default-exclude.template' -- exclude-from "$EXCLUDES" -v -e ssh ${USERNAME}@${SERVERNAME}:/ ${BACKUPTIME}-${SERVERNAME}/
+        rsync -r --exclude-from 'default-exclude.template' --exclude-from "$EXCLUDES" -v -e ssh ${USERNAME}@${SERVERNAME}:/ ${BACKUPTIME}-${SERVERNAME}/
 
         # Create archive
         tar cvf "${BACKUPTIME}-${SERVERNAME}.tar" -C "${BACKUPTIME}-${SERVERNAME}/" .
