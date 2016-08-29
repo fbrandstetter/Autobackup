@@ -31,9 +31,9 @@ if [[ ( ${FREEUPSPACE} = "yes" ) && ( ${DISKSPACE} -lt ${MAXUSED} ) ]]; then
                 echo "FREEING UP SPACE NOW!"
                 for i in {1..5}
                 do
-                        OLDESTFILE=$(find ${BACKUPDIR} -type f -printf '%T+ %p\n' | sort | head -n 1 | cut -f2 -d ' ')
-                        cd ${BACKUPDIR}
-                        rm ${OLDESTFILE}
+                        OLDESTFILE=$(find "${BACKUPDIR}" -type f -printf '%T+ %p\n' | sort | head -n 1 | cut -f2 -d ' ')
+                        cd "${BACKUPDIR}"
+                        rm "${OLDESTFILE}"
                         echo "DELETING $i FILE."
                 done
         fi
@@ -48,25 +48,25 @@ do
         USERNAME=$( echo $data | cut -f2 -d '|' )
 
         # Create directory for the backup
-        mkdir ${BACKUPTIME}-${SERVERNAME}
+        mkdir "${BACKUPTIME}-${SERVERNAME}"
 
         # Grab files from remote server
-        echo "get -r ${BACKUPDATA} ${BACKUPTIME}-${SERVERNAME}/" | sftp ${USERNAME}@${SERVERNAME}
+        echo "get -r ${BACKUPDATA} ${BACKUPTIME}-${SERVERNAME}/" | sftp "${USERNAME}"@"${SERVERNAME}"
 
         # Create archive
-        tar cvf ${BACKUPTIME}-${SERVERNAME}.tar -C ${BACKUPTIME}-${SERVERNAME}/ .
+        tar cvf "${BACKUPTIME}-${SERVERNAME}.tar" -C "${BACKUPTIME}-${SERVERNAME}/" .
 
         # Remove folder
         rm -rf "${BACKUPTIME}-${SERVERNAME}/"
 
         # Encrypt archive
-        openssl aes-256-cbc -salt -in ${BACKUPTIME}-${SERVERNAME}.tar -out ${BACKUPTIME}-${SERVERNAME}.tar.aes -k ${PASSWORD}
+        openssl aes-256-cbc -salt -in "${BACKUPTIME}-${SERVERNAME}.tar" -out "${BACKUPTIME}-${SERVERNAME}.tar.aes" -k "${PASSWORD}""
 
         # Remove unencrypted archive
-        rm ${BACKUPTIME}-${SERVERNAME}.tar
+        rm "${BACKUPTIME}-${SERVERNAME}.tar"
 
         # Move archive
-        mv ${BACKUPTIME}-${SERVERNAME}.tar.aes ${BACKUPDIR}
+        mv "${BACKUPTIME}-${SERVERNAME}.tar.aes" "${BACKUPDIR}"
 
 done
 
