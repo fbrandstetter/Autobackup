@@ -12,6 +12,9 @@ PASSWORD=""
 # SERVERLIST
 SERVERLIST=$(cat serverlist.template)
 
+# DEFAULT EXCLUDES ( Folders which aren't being backuped on ALL servers )
+DEFAULT_EXCLUDES="default-excludes.template"
+
 # Decide whether we want to delete backups if Disk is full or just stop backuping ( yes or no )
 FREEUPSPACE=""
 
@@ -52,7 +55,7 @@ do
         mkdir "${BACKUPTIME}-${SERVERNAME}"
 
         # Grab files from remote server
-        rsync -r --exclude-from 'default-exclude.template' --exclude-from "$EXCLUDES" -v -e ssh ${USERNAME}@${SERVERNAME}:/ ${BACKUPTIME}-${SERVERNAME}/
+        rsync -r --exclude-from "$DEFAULT_EXCLUDES" --exclude-from "$EXCLUDES" -v -e ssh ${USERNAME}@${SERVERNAME}:/ ${BACKUPTIME}-${SERVERNAME}/
 
         # Create archive
         tar cvf "${BACKUPTIME}-${SERVERNAME}.tar" -C "${BACKUPTIME}-${SERVERNAME}/" .
