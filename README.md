@@ -38,7 +38,7 @@ All servers are being added in the `serverlist.template` file. In order to have 
     <SERVER_HOSTNAME OR IP>|<USERNAME FOR AUTHENTICATION>|<EXCLUDE LIST>
 
 # Exclude
-Each server has it's own exclude list which directories we don't want to backup, as well as we have a default exclude list for files which are being excluded from all servers. Actually, by default we backup the entire system ( `/` ). An example for an exclude list looks like this:
+Each server has it's own exclude list which directories we don't want to backup, as well as we have a default exclude list for files which are being excluded from all servers. Actually, by default we backup the entire system ( `/` ). The default excludes list can be set using `DEFAULT_EXCLUDES` and it's format looks the same. An example for an exclude list looks like this:
 
     DIRECTORY/
     FILE.txt
