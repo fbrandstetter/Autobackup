@@ -25,7 +25,7 @@ DISKSPACE=$(df --output=avail -h "$PWD" | sed '1d;s/[^0-9]//g')
 MAXUSED="" # in GB
 
 
-if [[ ( ${FREEUPSPACE} = "yes" ) && ( ${DISKSPACE} -lt ${MAXUSED} ) ]]; then
+if [ ${DISKSPACE} -lt ${MAXUSED} ]; then
         echo "THERE ARE ONLY $DISKSPACE GB AVAILABLE ON THIS SYSTEM!"
         if [ ${FREEUPSPACE} = "yes" ]; then
                 echo "FREEING UP SPACE NOW!"
@@ -37,7 +37,10 @@ if [[ ( ${FREEUPSPACE} = "yes" ) && ( ${DISKSPACE} -lt ${MAXUSED} ) ]]; then
                         echo "DELETING $i FILE."
                 done
         fi
-        exit 1
+        if [ ${FREEUPSPACE} = "no" ]; then
+                echo "NOT FREEING UP SPACE. EXITING NOW."
+                exit 1
+        fi
 fi
 
 # Loop through all servers and do something
