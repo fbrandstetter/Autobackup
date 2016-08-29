@@ -27,7 +27,7 @@ MAXUSED="" # in GB
 
 if [[ ( ${FREEUPSPACE} = "yes" ) && ( ${DISKSPACE} -lt ${MAXUSED} ) ]]; then
         echo "THERE ARE ONLY $DISKSPACE GB AVAILABLE ON THIS SYSTEM!"
-        if [ $FREEUPSPACE = "yes" ]; then
+        if [ ${FREEUPSPACE} = "yes" ]; then
                 echo "FREEING UP SPACE NOW!"
                 for i in {1..5}
                 do
