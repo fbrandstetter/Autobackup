@@ -63,7 +63,7 @@ do
         rm -rf "${BACKUPTIME}-${SERVERNAME}/"
 
         # Encrypt archive
-        openssl aes-256-cbc -salt -in "${BACKUPTIME}-${SERVERNAME}.tar" -out "${BACKUPTIME}-${SERVERNAME}.tar.aes" -k "${PASSWORD}""
+        openssl aes-256-cbc -salt -in "${BACKUPTIME}-${SERVERNAME}.tar" -out "${BACKUPTIME}-${SERVERNAME}.tar.aes" -k "${PASSWORD}"
 
         # Remove unencrypted archive
         rm "${BACKUPTIME}-${SERVERNAME}.tar"
