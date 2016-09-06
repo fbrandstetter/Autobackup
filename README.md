@@ -18,10 +18,9 @@ All configuration is done in the `backup.sh` file. The following fields should b
 
     BACKUPDIR="/data/backup/"
     PASSWORD="sf9h4jp398hncpg9vncj409bn"
-    BACKUPDATA="/var/www/"
     FREEUPSPACE="no"
 
-This will grab the folder `/var/www/` and it's subdirectories and files from the remote server, create a new archive, encrypt it and move it to `BACKUPDIR`. The `FREEUPSPACE` variable sets, whether our server should check available disk space and delete backups in case it's full or not. In case that there are less than 10G disk space available, the script will delete the oldest 5 backups from `BACKUPDIR`. 
+This will grab the folder `/`, without the directories defined as excludes, and it's subdirectories and files from the remote server, create a new archive, encrypts it and moves it to `BACKUPDIR`. The `FREEUPSPACE` variable sets, whether our server should check available disk space and delete backups in case it's full or not. In case that there are less than 10G disk space available, the script will delete the oldest 5 backups from `BACKUPDIR`. 
 
 ## Decryption
 If you want to decrypt the archive ( i.e. to restore the backuped data ) you can run the following command:
