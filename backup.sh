@@ -25,7 +25,7 @@ DISKSPACE=$(df --output=avail -h "$PWD" | sed '1d;s/[^0-9]//g' | tr --delete "\n
 MAXUSED="" # in GB
 
 
-if [ "$MAXUSED" -gt "$DISKSPACE" ]; then
+if [ "$DISKSPACE" -gt "$MAXUSED" ]; then
         echo "THERE ARE ONLY $DISKSPACE GB AVAILABLE ON THIS SYSTEM!"
         if [ ${FREEUPSPACE} = "yes" ]; then
                 echo "FREEING UP SPACE NOW!"
